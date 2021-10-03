@@ -2,7 +2,9 @@ package com.example.photoshow.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Looper;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -18,6 +20,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(initLayout());
         initView();
         initData();
+
     }
 
     public void showToast(String msg){
@@ -27,6 +30,19 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void navigeteTo(Class cls){
         Intent in = new Intent(mContext,cls);
         startActivity(in);
+    }
+
+    public void showToastSync(String msg){
+        Looper.prepare();
+        Toast.makeText(mContext,msg,Toast.LENGTH_SHORT).show();
+        Looper.loop();
+    }
+
+    protected void saveStringToSp(String key,String val){
+        SharedPreferences sp = getSharedPreferences("sp_ttit",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString(key, val);
+        editor.commit();
     }
 
     protected abstract int initLayout();
