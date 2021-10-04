@@ -6,7 +6,9 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.photoshow.R;
 import com.example.photoshow.adapter.MyPagerAdapter;
 import com.example.photoshow.entity.TabEntity;
+import com.example.photoshow.fragment.AddFragment;
 import com.example.photoshow.fragment.CollectionFragment;
+import com.example.photoshow.fragment.FriendsFragment;
 import com.example.photoshow.fragment.HomeFragment;
 import com.example.photoshow.fragment.MyFragment;
 import com.flyco.tablayout.CommonTabLayout;
@@ -19,17 +21,17 @@ public class HomeActivity extends BaseActivity {
 
     private ViewPager viewPager;
     private CommonTabLayout commonTabLayout;
-    private String[] mTitles = {"首页", "收藏", "我的"};
+    private String[] mTitles = {"首页","收藏","添加","好友","我的"};
 
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
 
     private int[] mIconUnselectIds = {
-            R.mipmap.shouye, R.mipmap.shoucang2,
-            R.mipmap.wode_1};
+            R.mipmap.shouye, R.mipmap.shoucang2,R.mipmap.zengjiatianjiajiahao,
+            R.mipmap.haoyou,R.mipmap.wode_1};
     private int[] mIconSelectIds = {
-            R.mipmap.shouyetianchong, R.mipmap.shoucang,
-            R.mipmap.wode};
+            R.mipmap.shouyetianchong, R.mipmap.shoucang,R.mipmap.tianjia,
+            R.mipmap.haoyou_1, R.mipmap.wode};
 
     @Override
     protected int initLayout() {
@@ -46,6 +48,8 @@ public class HomeActivity extends BaseActivity {
     protected void initData() {
         mFragments.add(HomeFragment.newInstance());
         mFragments.add(CollectionFragment.newInstance());
+        mFragments.add(AddFragment.newInstance());
+        mFragments.add(FriendsFragment.newInstance());
         mFragments.add(MyFragment.newInstance());
         for (int i = 0; i < mTitles.length; i++) {
             mTabEntities.add(new TabEntity(mTitles[i], mIconSelectIds[i], mIconUnselectIds[i]));

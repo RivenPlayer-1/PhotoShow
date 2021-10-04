@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 
@@ -27,6 +28,8 @@ public class MainActivity extends BaseActivity {
         btnRegister1 = findViewById(R.id.btn_register1);
 
     }
+
+
 
     @Override
     protected void initData() {
