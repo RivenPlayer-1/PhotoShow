@@ -6,54 +6,65 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
+import com.bumptech.glide.Glide;
 
 import com.example.photoshow.R;
+import com.example.photoshow.entity.Photo;
 import com.example.photoshow.entity.PhotoEntity;
 
 import java.util.List;
 
-public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> {
+    private Context mContext;
 
-    private Context mcontext;
-    private List<PhotoEntity> data;
+    private List<Photo> mPhotoList;
 
-    public PhotoAdapter(Context context, List<PhotoEntity> data){
-        this.mcontext = context;
-        this.data = data;
-    }
-
-    //每项数据的布局
-    @NonNull
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull  ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mcontext).inflate(R.layout.item_photo_layout,parent,false);
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
-    }
-
-    //绑定数据
-    @Override
-    public void onBindViewHolder(@NonNull  RecyclerView.ViewHolder holder, int position) {
-        ViewHolder vh = (ViewHolder) holder;
-        PhotoEntity photoEntity = data.get(position);
-        vh.flPhoto.setTop(2);
-    }
-
-    //返回数据项数目
-    @Override
-    public int getItemCount() {
-        return data.size();
+    public PhotoAdapter(FragmentActivity activity, List<PhotoEntity> photoEntities) {
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
-        private FrameLayout flPhoto;
-        public ViewHolder(@NonNull  View view) {
-            super(view);
-            flPhoto = view.findViewById(R.id.photo_container);
+        CardView cardView;
+        ImageView photoImage;
+        TextView photoName;
+
+        public ViewHolder(@NonNull  View itemView) {
+            super(itemView);
+            cardView = (CardView) itemView;
+            photoImage = (ImageView)  itemView.findViewById(R.id.photo_image);
+            photoName = (TextView) itemView.findViewById(R.id.photo_name);
         }
     }
+
+    public PhotoAdapter(List<Photo> photoList){
+        mPhotoList = photoList;
+    }
+
+    @Override
+    public PhotoAdapter.ViewHolder onCreateViewHolder(@NonNull  ViewGroup parent, int viewType) {
+        if (mContext == null){
+            mContext = parent.getContext();
+        }
+        View view = LayoutInflater.from(mContext).inflate(R.layout.fragment_photo,parent,false);
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull  PhotoAdapter.ViewHolder holder, int position) {
+        Photo photo = mPhotoList.get(position);
+        holder.photoName.setText(photo.getName());
+        Glide.with(mContext).load(photo.getIamgeId()).into(holder.photoImage);
+    }
+
+    @Override
+    public int getItemCount() {
+        return mPhotoList.size();
+    }
 }
+

@@ -60,13 +60,15 @@ public class MyFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_my, container, false);
-        RecyclerView recyclerView = v.findViewById(R.id.recyclerView);
-        //初始化布局管理器
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        //选择垂直排列
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        //为recyclerView指定布局管理器
-        recyclerView.setLayoutManager(linearLayoutManager);
+//        RecyclerView recyclerView = v.findViewById(R.id.recycle_view);
+//        //初始化布局管理器
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+//        //选择垂直排列
+//        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//        //为recyclerView指定布局管理器
+//        recyclerView.setLayoutManager(linearLayoutManager);
         return v;
     }
+
+
 }
