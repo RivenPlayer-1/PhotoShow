@@ -112,11 +112,12 @@ public class HomeFragment extends Fragment {
     }
     private void initPhotos(){
         photoList.clear();
-        for (int i = 0 ; i < 11 ; i++){
-            Random random = new Random();
-            int index = random.nextInt(photos.length);
-            photoList.add(photos[index]);
-        }
+
+//        for (int i = 0 ; i < 11 ; i++){
+//            Random random = new Random();
+//            int index = random.nextInt(photos.length);
+//            photoList.add(photos[index]);
+//        }
     }
 
     private void refreshPhotos(){

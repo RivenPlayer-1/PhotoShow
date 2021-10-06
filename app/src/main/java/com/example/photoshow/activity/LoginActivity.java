@@ -9,7 +9,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.photoshow.R;
+import com.example.photoshow.utils.Constants;
+import com.example.photoshow.utils.HttpUtils;
 import com.example.photoshow.utils.StringUtil;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class LoginActivity extends BaseActivity {
 
@@ -17,6 +22,7 @@ public class LoginActivity extends BaseActivity {
     private EditText etPassword;
     private Button btnLogin;
 
+    private boolean password_currect = false;
     @Override
     protected int initLayout() {
         return R.layout.activity_login;
@@ -48,7 +54,35 @@ public class LoginActivity extends BaseActivity {
             showToast("请输入密码");
         }
         else {
-            navigeteTo(HomeActivity.class);
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    String result = HttpUtils.getJsonContent(Constants.SERVER_URL +"login?account="+username+"&password="+password);
+                    try {
+                        JSONObject jsonObject = new JSONObject(result);
+                        if (jsonObject.getBoolean("result") == true){
+                            password_currect = true;
+                            System.out.println(password_currect);
+                        }else {
+                            password_currect = false;
+                            System.out.println(password_currect);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            thread.start();
+            try {
+                thread.join();
+            }catch (InterruptedException e){
+                e.printStackTrace();
+            }
+            if (password_currect){
+                navigeteTo(HomeActivity.class);
+            }else {
+                Toast.makeText(LoginActivity.this,"账号信息有误",Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }
