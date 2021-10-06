@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 public abstract class BaseActivity extends AppCompatActivity {
     public Context mContext;
@@ -20,32 +22,55 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(initLayout());
         initView();
         initData();
-
     }
 
-    public void showToast(String msg){
-        Toast.makeText(mContext,msg, Toast.LENGTH_SHORT).show();
+    protected abstract int initLayout();
+
+    protected abstract void initView();
+
+    protected abstract void initData();
+
+    public void showToast(String msg) {
+        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
     }
 
-    public void navigeteTo(Class cls){
-        Intent in = new Intent(mContext,cls);
-        startActivity(in);
-    }
-
-    public void showToastSync(String msg){
+    public void showToastSync(String msg) {
         Looper.prepare();
-        Toast.makeText(mContext,msg,Toast.LENGTH_SHORT).show();
+        Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
         Looper.loop();
     }
 
-    protected void saveStringToSp(String key,String val){
-        SharedPreferences sp = getSharedPreferences("sp_ttit",MODE_PRIVATE);
+    public void navigateTo(Class cls) {
+        Intent in = new Intent(mContext, cls);
+        startActivity(in);
+    }
+
+    public void navigateToWithFlag(Class cls, int flags) {
+        Intent in = new Intent(mContext, cls);
+        in.setFlags(flags);
+        startActivity(in);
+    }
+
+    protected void insertVal(String key, String val) {
+        SharedPreferences sp = getSharedPreferences("sp_ttit", MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.putString(key, val);
         editor.commit();
     }
 
-    protected abstract int initLayout();
-    protected abstract void initView();
-    protected abstract void initData();
+    protected String findByKey(String key) {
+        SharedPreferences sp = getSharedPreferences("sp_ttit", MODE_PRIVATE);
+        return sp.getString(key, "");
+    }
+
+//    protected VideoViewManager getVideoViewManager() {
+//        return VideoViewManager.instance();
+//    }
+
+//    @NonNull
+//    @Override
+//    public AppCompatDelegate getDelegate() {
+//        return SkinAppCompatDelegateImpl.get(this, this);
+//    }
 }
+

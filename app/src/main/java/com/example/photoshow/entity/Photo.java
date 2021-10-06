@@ -1,46 +1,26 @@
 package com.example.photoshow.entity;
 
 public class Photo {
-    private Integer id;
-    private String phoUrl;
-    private Integer phoCol;
+    private String name;
+    private int iamgeId;
 
-    public Photo(Integer id, String phoUr, Integer phoCol) {
-        this.id = id;
-        this.phoUrl = phoUr;
-        this.phoCol = phoCol;
+    public Photo(String name, int iamgeId) {
+        this.name = name;
+        this.iamgeId = iamgeId;
     }
 
-    public Integer getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getPhoUr() {
-        return phoUrl;
+    public int getIamgeId() {
+        return iamgeId;
     }
 
-    public void setPhoUr(String phoUr) {
-        this.phoUrl = phoUr;
-    }
-
-    public Integer getPhoCol() {
-        return phoCol;
-    }
-
-    public void setPhoCol(Integer phoCol) {
-        this.phoCol = phoCol;
-    }
-
-    @Override
-    public String toString() {
-        return "Photo{" +
-                "id=" + id +
-                ", phoUr='" + phoUrl + '\'' +
-                ", phoCol=" + phoCol +
-                '}';
-    }
+    public void setIamgeId(int iamgeId) {
+        this.iamgeId = iamgeId;}
 }

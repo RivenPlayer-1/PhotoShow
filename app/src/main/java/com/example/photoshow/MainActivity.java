@@ -36,14 +36,14 @@ public class MainActivity extends BaseActivity {
         btnLogin1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigeteTo(LoginActivity.class);
+                navigateTo(LoginActivity.class);
             }
         });
 
         btnRegister1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navigeteTo(LoginActivity.class);
+                navigateTo(RegisterActivity.class);
             }
         });
     }

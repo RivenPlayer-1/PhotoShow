@@ -1,20 +1,20 @@
 package com.example.photoshow.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
+import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.photoshow.R;
-import com.example.photoshow.utils.Constants;
-import com.example.photoshow.utils.HttpUtils;
-import com.example.photoshow.utils.StringUtil;
+import com.example.photoshow.api.Api;
+import com.example.photoshow.api.ApiConfig;
+import com.example.photoshow.api.TtitCallback;
+import com.example.photoshow.entity.LoginResponse;
+import com.example.photoshow.utils.StringUtils;
+import com.google.gson.Gson;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.HashMap;
 
 public class LoginActivity extends BaseActivity {
 
@@ -44,45 +44,44 @@ public class LoginActivity extends BaseActivity {
                 String password = etPassword.getText().toString().trim();
                 login(username,password);
             }
-        });    }
+        });
+    }
 
-    private void login(String username, String password){
-        if (StringUtil.isEmpry(username,password)){
+    private void login(String account, String pwd) {
+        if (StringUtils.isEmpty(account)) {
             showToast("请输入账号");
+            return;
         }
-        else if(StringUtil.isEmpry(username,password)){
+        if (StringUtils.isEmpty(pwd)) {
             showToast("请输入密码");
+            return;
         }
-        else {
-            Thread thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    String result = HttpUtils.getJsonContent(Constants.SERVER_URL +"login?account="+username+"&password="+password);
-                    try {
-                        JSONObject jsonObject = new JSONObject(result);
-                        if (jsonObject.getBoolean("result") == true){
-                            password_currect = true;
-                            System.out.println(password_currect);
-                        }else {
-                            password_currect = false;
-                            System.out.println(password_currect);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        params.put("account", account);
+        params.put("password", pwd);
+        Api.config(ApiConfig.LOGIN, params).postRequest(this,new TtitCallback() {
+            @Override
+            public void onSuccess(final String res) {
+                Log.e("onSuccess", res);
+                Gson gson = new Gson();
+                LoginResponse loginResponse = gson.fromJson(res, LoginResponse.class);
+                System.out.println("aaaaaaaaaaaa:"+loginResponse);
+                System.out.println(loginResponse.getFault());
+                if (loginResponse.getFault().equals("true")) {
+                    String token = loginResponse.getToken();
+                    insertVal("token", token);
+                    navigateToWithFlag(HomeActivity.class,
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    showToastSync("登录成功");
+                } else {
+                    showToastSync("登录失败");
                 }
-            });
-            thread.start();
-            try {
-                thread.join();
-            }catch (InterruptedException e){
-                e.printStackTrace();
             }
-            if (password_currect){
-                navigeteTo(HomeActivity.class);
-            }else {
-                Toast.makeText(LoginActivity.this,"账号信息有误",Toast.LENGTH_SHORT).show();
+
+            @Override
+            public void onFailure(Exception e) {
+
             }
-        }
+        });
     }
 }
