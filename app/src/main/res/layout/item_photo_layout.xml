@@ -10,23 +10,79 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="0dp"
-        android:paddingTop="0dp"
-        android:paddingRight="0dp">
+        android:paddingLeft="21dp"
+        android:paddingTop="13dp"
+        android:paddingRight="21dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:orientation="horizontal">
+
+<!--            <ImageView-->
+<!--                android:id="@+id/img_header"-->
+<!--                android:layout_width="42dp"-->
+<!--                android:layout_height="42dp"-->
+<!--                android:src="@mipmap/shouye" />-->
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="11dp">
+
+                <TextView
+                    android:id="@+id/describe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:text="韭菜盒子新做法，不发面不烫面"
+                    android:textColor="#242424"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/author"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:text="大胃王"
+                    android:textColor="#9f9f9f"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <!--        <RelativeLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="187dp"-->
+        <!--            android:layout_marginTop="8dp">-->
+
+        <!--            <ImageView-->
+        <!--                android:id="@+id/img_cover"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="match_parent"-->
+        <!--                android:scaleType="fitXY"-->
+        <!--                android:src="@mipmap/default_bg" />-->
+
+        <!--        </RelativeLayout>-->
 
         <FrameLayout
-            android:id="@+id/photo_container"
+            android:id="@+id/player_containr"
             android:layout_width="match_parent"
             android:layout_height="187dp"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="8dp"
             android:background="@android:color/black"
             app:layout_constraintDimensionRatio="16:9"
             app:layout_constraintTop_toTopOf="parent">
+            <ImageView
+                android:id="@+id/photoshow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
         </FrameLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="32dp">
+            android:layout_height="39dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -35,34 +91,20 @@
                 android:layout_centerVertical="true"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/img_comment"
-                    android:layout_width="19dp"
-                    android:layout_height="19dp"
-                    android:src="@mipmap/fenxiang" />
-
-                <TextView
-                    android:id="@+id/comment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:text="0"
-                    android:textColor="#161616"
-                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_centerVertical="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="50dp"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/img_collect"
                     android:layout_width="19dp"
                     android:layout_height="19dp"
-                    android:src="@mipmap/xihuan" />
+                    android:src="@mipmap/shoucang" />
 
                 <TextView
                     android:id="@+id/collect"
@@ -79,14 +121,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="50dp"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/img_like"
                     android:layout_width="19dp"
                     android:layout_height="19dp"
-                    android:src="@mipmap/xiazai" />
+                    android:src="@mipmap/dianzan" />
 
                 <TextView
                     android:id="@+id/dz"

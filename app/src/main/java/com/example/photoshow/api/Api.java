@@ -77,7 +77,7 @@ public class Api {
         });
     }
 
-    public void getRequest(Context context, final TtitCallback callback) {
+    public void getRequest(Context context, final PhotoCallBack callback) {
         SharedPreferences sp = context.getSharedPreferences("sp_ttit", MODE_PRIVATE);
         String token = sp.getString("token", "");
         String url = getAppendUrl(requestUrl, mParams);
@@ -129,5 +129,6 @@ public class Api {
         }
         return url;
     }
+
 }
 

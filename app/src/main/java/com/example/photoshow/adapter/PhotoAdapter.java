@@ -1,6 +1,7 @@
 package com.example.photoshow.adapter;
 
 import android.content.Context;
+import android.media.Image;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,50 +22,57 @@ import com.example.photoshow.entity.PhotoEntity;
 
 import java.util.List;
 
-public class PhotoAdapter extends RecyclerView.Adapter<PhotoAdapter.ViewHolder> {
+public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
     private Context mContext;
-
-    private List<Photo> mPhotoList;
-
-    public PhotoAdapter(FragmentActivity activity, List<PhotoEntity> photoEntities) {
+    private List<Photo> datas;
+    public PhotoAdapter(Context context,List<Photo> datas){
+        this.mContext = context;
+        this.datas = datas;
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder{
-        CardView cardView;
-        ImageView photoImage;
-        TextView photoName;
-
-        public ViewHolder(@NonNull  View itemView) {
-            super(itemView);
-            cardView = (CardView) itemView;
-            photoImage = (ImageView)  itemView.findViewById(R.id.photo_image);
-            photoName = (TextView) itemView.findViewById(R.id.photo_name);
-        }
-    }
-
-    public PhotoAdapter(List<Photo> photoList){
-        mPhotoList = photoList;
-    }
 
     @Override
-    public PhotoAdapter.ViewHolder onCreateViewHolder(@NonNull  ViewGroup parent, int viewType) {
-        if (mContext == null){
-            mContext = parent.getContext();
-        }
-        View view = LayoutInflater.from(mContext).inflate(R.layout.fragment_photo,parent,false);
-        return new ViewHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        //将R.layout.item_photo_layout里的组件封装成一个对象
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_photo_layout,parent,false);
+        ViewHolder viewHolder = new ViewHolder(view);
+        return viewHolder;
     }
 
+    //给布局组件赋值
     @Override
-    public void onBindViewHolder(@NonNull  PhotoAdapter.ViewHolder holder, int position) {
-        Photo photo = mPhotoList.get(position);
-        holder.photoName.setText(photo.getName());
-        Glide.with(mContext).load(photo.getIamgeId()).into(holder.photoImage);
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        ViewHolder vh = (ViewHolder) holder;
+        //获得实体对象
+        Photo photo = datas.get(position);
+        vh.tvAuthor.setText(photo.getAuthor());
+        vh.tvDesc.setText(photo.getDescrition());
+        vh.tvDz.setText(String.valueOf(photo.getDzCount()));
+        vh.tvCollect.setText(String.valueOf(photo.getCollcetCount()));
+        Glide.with(mContext).load(photo.getSrc()).into(vh.ivPhoto);
     }
 
     @Override
     public int getItemCount() {
-        return mPhotoList.size();
+        return datas.size();
+    }
+
+    static class ViewHolder extends RecyclerView.ViewHolder{
+        CardView cardView;
+        private TextView tvAuthor;
+        private TextView tvDesc;
+        private TextView tvDz;
+        private TextView tvCollect;
+        private ImageView ivPhoto;
+        public ViewHolder(@NonNull  View view) {
+            super(view);
+            tvAuthor = view.findViewById(R.id.author);
+            tvDz = view.findViewById(R.id.dz);
+            tvCollect = view.findViewById(R.id.collect);
+            tvDesc = view.findViewById(R.id.describe);
+            ivPhoto = view.findViewById(R.id.photoshow);
+        }
     }
 }
 
