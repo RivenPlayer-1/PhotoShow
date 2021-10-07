@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +56,8 @@ public class HomeFragment extends BaseFragment {
     private RecyclerView recyclerView;
     private List<Photo> photoList = new ArrayList<>();
 
+    private PhotoAdapter photoAdapter;
+    List<Photo> datas;
     private SwipeRefreshLayout swipeRefreshLayout;
 
     public HomeFragment() {
@@ -105,85 +109,66 @@ public class HomeFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        photoAdapter = new PhotoAdapter(getActivity());
         //线性管理器
         recyclerView.setLayoutManager(linearLayoutManager);
-        List<Photo> datas = new ArrayList<>();
-        for (int i = 0 ; i <8 ; i++ ){
-            Photo photo = new Photo();
-            photo.setDzCount(1);
-            photo.setCollcetCount(2);
-            photo.setAuthor("3");
-            photo.setDescrition("4");
-            photo.setId(5);
-            photo.setSrc(R.mipmap.b);
-            datas.add(photo);
+        String token = getStringFromSp("token");
+        if (!StringUtils.isEmpty(token)){
+            HashMap<String,Object> params = new HashMap<>();
+            params.put("token",token);
+            Api.config(ApiConfig.PHOTO_LIST,params).getRequest(getActivity(),new PhotoCallBack() {
+                @Override
+                public void onSuccess(String res) {
+                    System.out.println("CCCCCCCCCCCC+++++++++______"+res);
+                    PhotoRespnse respnse = new Gson().fromJson(res,PhotoRespnse.class);
+                    datas = respnse.getPhotos();
+                    System.out.println("dddddddddddddddd________"+datas);
+//                    PhotoAdapter adapter = new PhotoAdapter(getActivity(),datas);
+
+                    handler.sendEmptyMessage(0);
+//                    recyclerView.setAdapter(photoAdapter);
+//                    showToastSync(res);
+                }
+                @Override
+                public void onFailure(Exception e) {
+                    System.out.println("dddddddddddd+++++++++______");
+                }
+            });
+        }else {
+            navigeteTo(LoginActivity.class);
         }
-        PhotoAdapter adapter = new PhotoAdapter(getActivity(),datas);
-        recyclerView.setAdapter(adapter);
-//        getPhotoList();
+//        List<Photo> datas = new ArrayList<>();
+//        for (int i = 0 ; i <8 ; i++ ){
+//            Photo photo = new Photo();
+//            photo.setDzCount(1);
+//            photo.setCollcetCount(2);
+//            photo.setAuthor("3");
+//            photo.setDescrition("4");
+//            photo.setId(5);
+//            photo.setSrc(R.mipmap.b);
+//            datas.add(photo);
+//        }
+//        PhotoAdapter adapter = new PhotoAdapter(getActivity(),datas);
+//        recyclerView.setAdapter(adapter);
+        getPhotoList();
     }
 
-//    private void getVideoList(){
-//        String token = getStringFromSp("token");
-//        if (!StringUtils.isEmpty(token)){
-//            HashMap<String,Object> params = new HashMap<>();
-//            params.put("token",token);
-//            Api.config(ApiConfig.PHOTO_LIST,params).getRequest(getActivity(),new PhotoCallBack() {
-//                @Override
-//                public void onSuccess(String res) {
-//                    List<Photo> datas = new ArrayList<>();
-//                    PhotoAdapter photoAdapter = new PhotoAdapter(getActivity(),datas);
-//                    recyclerView.setAdapter(photoAdapter);
-//                    showToastSync(res);
-//                }
-//
-//                @Override
-//                public void onFailure(Exception e) {
-//
-//                }
-//            });
-//        }
-//    }
 
-//    private void getPhotoList(){
-//        String token = getStringFromSp("token");
-//        if (!StringUtils.isEmpty(token)){
-//            HashMap<String,Object> params = new HashMap<>();
-//            params.put("token",token);
-//            Api.config(ApiConfig.PHOTO_LIST,params).getRequest(getActivity(),new PhotoCallBack() {
-//                @Override
-//                public void onSuccess(String res) {
-//                    System.out.println("CCCCCCCCCCCC+++++++++______"+res);
-//                    PhotoRespnse respnse = new Gson().fromJson(res,PhotoRespnse.class);
-//                    List<Photo> datas = respnse.getPhotos();
-//                    PhotoAdapter photoAdapter = new PhotoAdapter(getActivity(),datas);
-//                    new Thread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            try {
-//                                Thread.sleep(1000);
-//                            }catch (InterruptedException e){
-//                                e.printStackTrace();
-//                            }
-//                            getActivity().runOnUiThread(new Runnable(){
-//                                @Override
-//                                public void run() {
-//                                    recyclerView.setAdapter(photoAdapter);
-//                                }
-//                            });
-//                        }
-//                    }).start();
-//                    recyclerView.setAdapter(photoAdapter);
-//                    showToastSync(res);
-//                }
-//                @Override
-//                public void onFailure(Exception e) {
-//                    System.out.println("dddddddddddd+++++++++______");
-//                }
-//            });
-//        }else {
-//            navigeteTo(LoginActivity.class);
-//        }
-//
-//    }
+    private void getPhotoList(){
+
+    }
+
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 0:
+                    photoAdapter.setDatas(datas);
+                    photoAdapter.notifyDataSetChanged();
+                    recyclerView.setAdapter(photoAdapter);
+                    break;
+            }
+        }
+    };
 }

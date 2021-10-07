@@ -100,7 +100,7 @@ public class Api {
                 try {
                     JSONObject jsonObject = new JSONObject(result);
                     String code = jsonObject.getString("code");
-                    if (code.equals("401")) {
+                    if (code.equals("402")) {
                         Intent in = new Intent(context, LoginActivity.class);
                         context.startActivity(in);
                     }

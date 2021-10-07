@@ -1,11 +1,13 @@
 package com.example.photoshow.entity;
 
+import android.net.Uri;
+
 public class Photo {
     private Integer id;
     private String author;
     private Integer dzCount;
     private Integer collcetCount;
-    private Integer src;
+    private String src;
     private String descrition;
     public Integer getId() {
         return id;
@@ -39,11 +41,11 @@ public class Photo {
         this.collcetCount = collcetCount;
     }
 
-    public Integer getSrc() {
+    public String getSrc() {
         return src;
     }
 
-    public void setSrc(Integer src) {
+    public void setSrc(String src) {
         this.src = src;
     }
 

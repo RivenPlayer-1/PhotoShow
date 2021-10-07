@@ -31,6 +31,13 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         this.datas = datas;
     }
 
+    public PhotoAdapter(Context mContext) {
+        this.mContext = mContext;
+    }
+
+    public void setDatas(List<Photo> datas){
+        this.datas = datas;
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
