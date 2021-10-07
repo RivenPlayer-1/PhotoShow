@@ -10,7 +10,24 @@ public class LoginResponse {
      */
 
     private String fault;
+    private String userAccount;
     private String token;
+
+    public String getUserAccount() {
+        return userAccount;
+    }
+
+    public void setUserAccount(String userAccount) {
+        this.userAccount = userAccount;
+    }
+
+    public String getUserId() {
+        return userAccount;
+    }
+
+    public void setUserId(String userId) {
+        this.userAccount = userId;
+    }
 
     public String getFault() {
         return fault;

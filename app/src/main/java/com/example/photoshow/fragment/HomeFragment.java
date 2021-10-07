@@ -119,10 +119,9 @@ public class HomeFragment extends BaseFragment {
             Api.config(ApiConfig.PHOTO_LIST,params).getRequest(getActivity(),new PhotoCallBack() {
                 @Override
                 public void onSuccess(String res) {
-                    System.out.println("CCCCCCCCCCCC+++++++++______"+res);
                     PhotoRespnse respnse = new Gson().fromJson(res,PhotoRespnse.class);
                     datas = respnse.getPhotos();
-                    System.out.println("dddddddddddddddd________"+datas);
+
 //                    PhotoAdapter adapter = new PhotoAdapter(getActivity(),datas);
 
                     handler.sendEmptyMessage(0);
@@ -131,25 +130,11 @@ public class HomeFragment extends BaseFragment {
                 }
                 @Override
                 public void onFailure(Exception e) {
-                    System.out.println("dddddddddddd+++++++++______");
                 }
             });
         }else {
             navigeteTo(LoginActivity.class);
         }
-//        List<Photo> datas = new ArrayList<>();
-//        for (int i = 0 ; i <8 ; i++ ){
-//            Photo photo = new Photo();
-//            photo.setDzCount(1);
-//            photo.setCollcetCount(2);
-//            photo.setAuthor("3");
-//            photo.setDescrition("4");
-//            photo.setId(5);
-//            photo.setSrc(R.mipmap.b);
-//            datas.add(photo);
-//        }
-//        PhotoAdapter adapter = new PhotoAdapter(getActivity(),datas);
-//        recyclerView.setAdapter(adapter);
         getPhotoList();
     }
 

@@ -80,10 +80,12 @@ public class Api {
     public void getRequest(Context context, final PhotoCallBack callback) {
         SharedPreferences sp = context.getSharedPreferences("sp_ttit", MODE_PRIVATE);
         String token = sp.getString("token", "");
+        String userAccount = sp.getString("userAccount","");
         String url = getAppendUrl(requestUrl, mParams);
         Request request = new Request.Builder()
                 .url(url)
                 .addHeader("token", token)
+                .addHeader("userAccount",userAccount)
                 .get()
                 .build();
         Call call = client.newCall(request);

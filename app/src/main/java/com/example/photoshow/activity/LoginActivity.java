@@ -70,6 +70,7 @@ public class LoginActivity extends BaseActivity {
                 if (loginResponse.getFault().equals("true")) {
                     String token = loginResponse.getToken();
                     insertVal("token", token);
+                    insertVal("userAccount",loginResponse.getUserAccount());
                     navigateToWithFlag(HomeActivity.class,
                             Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     showToastSync("登录成功");

@@ -12,8 +12,13 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.photoshow.R;
+import com.example.photoshow.adapter.CollAdapter;
+import com.example.photoshow.entity.Coll;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +35,11 @@ public class FriendsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private RecyclerView recyclerView;
+    private CollAdapter collAdapter;
+    private List<Coll> datas;
+
 
     public FriendsFragment() {
         // Required empty public constructor
