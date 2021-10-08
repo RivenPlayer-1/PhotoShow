@@ -97,13 +97,13 @@ public class CollectionFragment extends BaseFragment {
         if (!StringUtils.isEmpty(token)){
             HashMap<String,Object> params = new HashMap<>();
             params.put("token",token);
-            Api.config(ApiConfig.COLLECT,params).getRequest(getActivity(),new PhotoCallBack() {
+            Api.config(ApiConfig.COLLECT,params).myCollRequest(getActivity(),new PhotoCallBack() {
                 @Override
                 public void onSuccess(String res) {
-                    System.out.println("CCCCCCCCCCCC+++++++++______"+res);
+//                    System.out.println("CCCCCCCCCCCC+++++++++______"+res);
                     CollectionResponse respnse = new Gson().fromJson(res, CollectionResponse.class);
                     datas = respnse.getCollection();
-                    System.out.println("dddddddddddddddd________"+datas);
+//                    System.out.println("dddddddddddddddd________"+datas);
 //                    PhotoAdapter adapter = new PhotoAdapter(getActivity(),datas);
 
                     handler.sendEmptyMessage(0);

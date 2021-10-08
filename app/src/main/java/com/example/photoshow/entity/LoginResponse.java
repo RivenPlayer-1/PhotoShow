@@ -1,6 +1,8 @@
 package com.example.photoshow.entity;
 
-public class LoginResponse {
+import java.io.Serializable;
+
+public class LoginResponse implements Serializable {
 
     /**
      * msg : success
@@ -8,9 +10,8 @@ public class LoginResponse {
      * expire : 604800
      * token : eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI2IiwiaWF0IjoxNTkyNDg2OTQzLCJleHAiOjE1OTMwOTE3NDN9.f5sxyG60GyDlj0FcZEmPAADiLHX_pATrvicxbADqvRqYurYQC5s0KAjw5XgHS4gpk-qUSwWtcJpY_nJjYf_2Dw
      */
-
-    private String fault;
     private String userAccount;
+    private String fault;
     private String token;
 
     public String getUserAccount() {
@@ -43,5 +44,14 @@ public class LoginResponse {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    @Override
+    public String toString() {
+        return "LoginResponse{" +
+                "fault='" + fault + '\'' +
+                ", userAccount='" + userAccount + '\'' +
+                ", token='" + token + '\'' +
+                '}';
     }
 }

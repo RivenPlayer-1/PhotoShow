@@ -65,10 +65,10 @@ public class LoginActivity extends BaseActivity {
                 Log.e("onSuccess", res);
                 Gson gson = new Gson();
                 LoginResponse loginResponse = gson.fromJson(res, LoginResponse.class);
-                System.out.println("aaaaaaaaaaaa:"+loginResponse);
-                System.out.println(loginResponse.getFault());
+                System.out.println(loginResponse);
                 if (loginResponse.getFault().equals("true")) {
                     String token = loginResponse.getToken();
+                    String userAccount = loginResponse.getUserAccount();
                     insertVal("token", token);
                     insertVal("userAccount",loginResponse.getUserAccount());
                     navigateToWithFlag(HomeActivity.class,

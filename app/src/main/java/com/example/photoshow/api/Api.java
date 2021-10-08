@@ -114,6 +114,31 @@ public class Api {
         });
     }
 
+    public void myCollRequest(Context context,final PhotoCallBack callBack){
+        SharedPreferences sp = context.getSharedPreferences("sp_ttit", MODE_PRIVATE);
+        String userAccout = sp.getString("userAccount","");
+        String url = getAppendUrl(requestUrl,mParams)+"&userAccount="+userAccout;
+        System.out.println(url);
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("OnFailure",e.getMessage());
+                callBack.onFailure(e);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String result = response.body().string();
+                callBack.onSuccess(result);
+            }
+        });
+    }
+
     private String getAppendUrl(String url, Map<String, Object> map) {
         if (map != null && !map.isEmpty()) {
             StringBuffer buffer = new StringBuffer();
