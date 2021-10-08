@@ -1,19 +1,24 @@
 package com.example.photoshow.adapter;
 
 import android.content.Context;
+import android.media.Image;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 
 import com.example.photoshow.R;
 import com.example.photoshow.entity.Photo;
+
 
 import java.util.List;
 
@@ -26,13 +31,6 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         this.datas = datas;
     }
 
-    public PhotoAdapter(Context mContext) {
-        this.mContext = mContext;
-    }
-
-    public void setDatas(List<Photo> datas){
-        this.datas = datas;
-    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -60,7 +58,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return datas.size();
     }
 
-    private static class ViewHolder extends RecyclerView.ViewHolder{
+    static class ViewHolder extends RecyclerView.ViewHolder{
         CardView cardView;
         private TextView tvAuthor;
         private TextView tvDesc;
