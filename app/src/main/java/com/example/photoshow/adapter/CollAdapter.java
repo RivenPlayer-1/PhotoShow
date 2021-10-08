@@ -12,6 +12,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.photoshow.Helper.LongClickHandler;
 import com.example.photoshow.R;
 import com.example.photoshow.entity.Coll;
 
@@ -78,6 +79,7 @@ public class CollAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             collTvCollect = view.findViewById(R.id.coll_collect);
             collTvDesc = view.findViewById(R.id.coll_describe);
             collIvPhoto = view.findViewById(R.id.coll_photoshow);
+            collIvPhoto.setOnLongClickListener(new LongClickHandler());
         }
     }
 }
