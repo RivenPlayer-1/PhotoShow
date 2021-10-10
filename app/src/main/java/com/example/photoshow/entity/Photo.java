@@ -13,7 +13,7 @@ public class Photo {
     private String flagcollect;
 
     public boolean isFlaglike() {
-        if (flaglike.equals("false")){
+        if (getFlaglike().equals("false")){
             return false;
         }else {
             return true;
@@ -27,7 +27,13 @@ public class Photo {
     public void setFlaglike(String flaglike) {
         this.flaglike = flaglike;
     }
-
+    public boolean isFlagcollect() {
+        if (flagcollect.equals("false")){
+            return false;
+        }else {
+            return true;
+        }
+    }
     public String getFlagcollect() {
         return flagcollect;
     }
@@ -85,16 +91,17 @@ public class Photo {
     }
 
 
-
     @Override
     public String toString() {
         return "Photo{" +
                 "id=" + id +
                 ", author='" + author + '\'' +
-                ", dzCount='" + dzCount + '\'' +
-                ", collcetCount='" + collcetCount + '\'' +
+                ", dzCount=" + dzCount +
+                ", collcetCount=" + collcetCount +
                 ", src='" + src + '\'' +
                 ", descrition='" + descrition + '\'' +
+                ", flaglike='" + flaglike + '\'' +
+                ", flagcollect='" + flagcollect + '\'' +
                 '}';
     }
 }

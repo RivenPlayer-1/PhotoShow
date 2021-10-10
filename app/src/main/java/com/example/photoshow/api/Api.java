@@ -78,15 +78,15 @@ public class Api {
         });
     }
 
-    public void getRequest(Context context, final PhotoCallBack callback) {
+    public void getRequest(Context context,Integer uid,final PhotoCallBack callback) {
         SharedPreferences sp = context.getSharedPreferences("sp_ttit", MODE_PRIVATE);
         String token = sp.getString("token", "");
         String userAccount = sp.getString("userAccount","");
-        String url = getAppendUrl(requestUrl, mParams);
+        String url = getAppendUrl(requestUrl, mParams)+"&uid="+uid;
+        System.out.println("------------------------------"+url);
         Request request = new Request.Builder()
                 .url(url)
                 .addHeader("token", token)
-                .addHeader("userAccount",userAccount)
                 .get()
                 .build();
         Call call = client.newCall(request);
@@ -142,8 +142,8 @@ public class Api {
 
     public void myCollRequest2(Context context,Integer uid,Integer vid,Boolean flag,Integer type,final PhotoCallBack callBack){
         SharedPreferences sp = context.getSharedPreferences("sp_ttit", MODE_PRIVATE);
-        String userAccout = sp.getString("userAccount","");
-        String url = getAppendUrl(requestUrl,mParams)+"?uid="+userAccout+"&vid="+vid+"&flag="+flag+"&type="+type;
+        //String userAccout = sp.getString("userAccount","");
+        String url = getAppendUrl(requestUrl,mParams)+"?uid="+uid+"&vid="+vid+"&flag="+flag+"&type="+type;
         System.out.println("++++++++++++++++++++++++++++++++++++++++++++"+url);
         Request request = new Request.Builder()
                 .url(url)

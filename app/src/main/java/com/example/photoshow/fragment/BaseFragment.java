@@ -34,7 +34,7 @@ public class BaseFragment extends Fragment implements PhotoCallBack {
         editor.commit();
     }
 
-    protected String getStringFromSp(String key){
+    public String getStringFromSp(String key){
         SharedPreferences sp = getActivity().getSharedPreferences("sp_ttit",MODE_PRIVATE);
         return sp.getString(key,"");
     }

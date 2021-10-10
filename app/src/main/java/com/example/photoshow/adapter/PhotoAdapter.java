@@ -45,7 +45,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private static Context mContext;
     public List<Photo> datas;
-    int mpos;
+
     public PhotoAdapter(Context context, List<Photo> datas){
         this.mContext = context;
         this.datas = datas;
@@ -72,18 +72,20 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ViewHolder vh = (ViewHolder) holder;
         //获得实体对象
-        this.mpos=position;
+
         Photo photo = datas.get(position);
         boolean flaglike=photo.isFlaglike();
-        String flagcollect=photo.getFlagcollect();
+        boolean flagcollect=photo.isFlagcollect();
+        Integer id=photo.getId();
         if(flaglike){
             //vh.tvDz.setTextColor(Color.parseColor("#E21918"));
             vh.imgDianzan.setImageResource(R.mipmap.dianzan_kuai);
         }
-        if(flagcollect.equals("true")){
+        if(flagcollect){
             //vh.tvCollect.setTextColor(Color.parseColor("#E21918"));
             vh.imgCollect.setImageResource(R.mipmap.shoucang);
         }
+        vh.id=id;
         vh.flaglike=flaglike;
         vh.flagcollect=flagcollect;
         vh.tvAuthor.setText(photo.getAuthor());
@@ -108,8 +110,8 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         private ImageView imgCollect;
         private ImageView imgDianzan;
         private boolean flaglike;
-        private String flagcollect;
-        public int mpos;
+        private boolean flagcollect;
+        private Integer id;
 
 
         public ViewHolder(@NonNull  View view) {
@@ -127,15 +129,16 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 @Override
                 public void onClick(View view) {
                     int collectNum=Integer.parseInt(tvCollect.getText().toString());
-                    if(flagcollect.equals("true")){
+                    if(flagcollect){
                         tvCollect.setText(String.valueOf(--collectNum));
                         imgCollect.setImageResource(R.mipmap.shoucang2);
-
+                        updateCount(1,id,1,flagcollect);
                     }else{
                         tvCollect.setText(String.valueOf(++collectNum));
                         imgCollect.setImageResource(R.mipmap.shoucang);
+                        updateCount(1,id,1,flagcollect);
                     }
-                    flagcollect="false";
+                    flagcollect=!flagcollect;
                 }
             });
 
@@ -146,12 +149,11 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     if(flaglike){
                         tvDz.setText(String.valueOf(--likeNum));
                         imgDianzan.setImageResource(R.mipmap.dianzan);
-
-                        updateCount(1,1,2,flaglike);
+                        updateCount(1,id,2,flaglike);
                     }else{
                         tvDz.setText(String.valueOf(++likeNum));
                         imgDianzan.setImageResource(R.mipmap.dianzan_kuai);
-                        updateCount(1,1,2,flaglike);
+                        updateCount(1,id,2,flaglike);
                     }
                     flaglike=!flaglike;
                 }
@@ -168,7 +170,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 Log.e("onSuccess", res);
                 Gson gson = new Gson();
                 PhotoRespnse photoRespnse = gson.fromJson(res, PhotoRespnse.class);
-                System.out.println(photoRespnse);
+                System.out.println("000000000000000000000000000"+photoRespnse);
                 /*if (photoRespnse.getCode().equals("0")) {
 
                 }*/

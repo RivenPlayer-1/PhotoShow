@@ -108,7 +108,7 @@ public class HomeFragment extends BaseFragment {
         if (!StringUtils.isEmpty(token)){
             HashMap<String,Object> params = new HashMap<>();
             params.put("token",token);
-            Api.config(ApiConfig.PHOTO_LIST,params).getRequest(getActivity(),new PhotoCallBack() {
+            Api.config(ApiConfig.PHOTO_LIST,params).getRequest(getActivity(),Integer.valueOf(getStringFromSp("uid")),new PhotoCallBack() {
                 @Override
                 public void onSuccess(String res) {
                     PhotoRespnse respnse = new Gson().fromJson(res,PhotoRespnse.class);
