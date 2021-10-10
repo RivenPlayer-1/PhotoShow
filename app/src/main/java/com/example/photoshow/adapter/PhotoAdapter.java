@@ -1,6 +1,10 @@
 package com.example.photoshow.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +18,34 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.photoshow.Helper.LongClickHandler;
 import com.example.photoshow.R;
+import com.example.photoshow.activity.HomeActivity;
+import com.example.photoshow.api.Api;
+import com.example.photoshow.api.ApiConfig;
+import com.example.photoshow.api.PhotoCallBack;
+import com.example.photoshow.api.TtitCallback;
+import com.example.photoshow.entity.BaseResponse;
+import com.example.photoshow.entity.LoginResponse;
 import com.example.photoshow.entity.Photo;
-
+import com.example.photoshow.entity.PhotoRespnse;
+import com.example.photoshow.fragment.BaseFragment;
+import com.google.gson.Gson;
+import com.example.photoshow.activity.BaseActivity;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
-public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Request;
+import okhttp3.Response;
 
-    private Context mContext;
-    private List<Photo> datas;
+import static android.content.Context.MODE_PRIVATE;
+
+public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+
+    private static Context mContext;
+    public List<Photo> datas;
+    int mpos;
     public PhotoAdapter(Context context, List<Photo> datas){
         this.mContext = context;
         this.datas = datas;
@@ -48,7 +72,20 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ViewHolder vh = (ViewHolder) holder;
         //获得实体对象
+        this.mpos=position;
         Photo photo = datas.get(position);
+        boolean flaglike=photo.isFlaglike();
+        String flagcollect=photo.getFlagcollect();
+        if(flaglike){
+            //vh.tvDz.setTextColor(Color.parseColor("#E21918"));
+            vh.imgDianzan.setImageResource(R.mipmap.dianzan_kuai);
+        }
+        if(flagcollect.equals("true")){
+            //vh.tvCollect.setTextColor(Color.parseColor("#E21918"));
+            vh.imgCollect.setImageResource(R.mipmap.shoucang);
+        }
+        vh.flaglike=flaglike;
+        vh.flagcollect=flagcollect;
         vh.tvAuthor.setText(photo.getAuthor());
         vh.tvDesc.setText(photo.getDescrition());
         vh.tvDz.setText(String.valueOf(photo.getDzCount()));
@@ -68,6 +105,13 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         private TextView tvDz;
         private TextView tvCollect;
         private ImageView ivPhoto;
+        private ImageView imgCollect;
+        private ImageView imgDianzan;
+        private boolean flaglike;
+        private String flagcollect;
+        public int mpos;
+
+
         public ViewHolder(@NonNull  View view) {
             super(view);
             tvAuthor = view.findViewById(R.id.author);
@@ -76,7 +120,69 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             tvDesc = view.findViewById(R.id.describe);
             ivPhoto = view.findViewById(R.id.photoshow);
             ivPhoto.setOnLongClickListener(new LongClickHandler());
+            imgCollect=view.findViewById(R.id.img_collect);
+            imgDianzan=view.findViewById(R.id.img_like);
+
+            imgCollect.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int collectNum=Integer.parseInt(tvCollect.getText().toString());
+                    if(flagcollect.equals("true")){
+                        tvCollect.setText(String.valueOf(--collectNum));
+                        imgCollect.setImageResource(R.mipmap.shoucang2);
+
+                    }else{
+                        tvCollect.setText(String.valueOf(++collectNum));
+                        imgCollect.setImageResource(R.mipmap.shoucang);
+                    }
+                    flagcollect="false";
+                }
+            });
+
+            imgDianzan.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int likeNum=Integer.parseInt(tvDz.getText().toString());
+                    if(flaglike){
+                        tvDz.setText(String.valueOf(--likeNum));
+                        imgDianzan.setImageResource(R.mipmap.dianzan);
+
+                        updateCount(1,1,2,flaglike);
+                    }else{
+                        tvDz.setText(String.valueOf(++likeNum));
+                        imgDianzan.setImageResource(R.mipmap.dianzan_kuai);
+                        updateCount(1,1,2,flaglike);
+                    }
+                    flaglike=!flaglike;
+                }
+            });
+
         }
     }
+
+    private static void updateCount(int uid,int vid,int type,boolean flag){
+        HashMap<String, Object> params = new HashMap<String, Object>();
+        Api.config(ApiConfig.CHANGEDATA, params).myCollRequest2(mContext,uid,vid,flag,type,new PhotoCallBack() {
+            @Override
+            public void onSuccess(final String res) {
+                Log.e("onSuccess", res);
+                Gson gson = new Gson();
+                PhotoRespnse photoRespnse = gson.fromJson(res, PhotoRespnse.class);
+                System.out.println(photoRespnse);
+                /*if (photoRespnse.getCode().equals("0")) {
+
+                }*/
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+
+            }
+        });
+
+
+    }
+
+
 }
 

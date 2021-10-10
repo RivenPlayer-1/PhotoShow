@@ -48,6 +48,7 @@ public class Api {
         SharedPreferences sp = context.getSharedPreferences("sp_ttit", MODE_PRIVATE);
         String token = sp.getString("token", "");
         JSONObject jsonObject = new JSONObject(mParams);
+//        System.out.println("qqqqqqqqqqqqqqqqqqqqqqqqqqqqq"+mParams);
         String jsonStr = jsonObject.toString();
         RequestBody requestBodyJson =
                 RequestBody.create(MediaType.parse("application/json;charset=utf-8")
@@ -139,6 +140,30 @@ public class Api {
         });
     }
 
+    public void myCollRequest2(Context context,Integer uid,Integer vid,Boolean flag,Integer type,final PhotoCallBack callBack){
+        SharedPreferences sp = context.getSharedPreferences("sp_ttit", MODE_PRIVATE);
+        String userAccout = sp.getString("userAccount","");
+        String url = getAppendUrl(requestUrl,mParams)+"?uid="+userAccout+"&vid="+vid+"&flag="+flag+"&type="+type;
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++"+url);
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("OnFailure",e.getMessage());
+                callBack.onFailure(e);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String result = response.body().string();
+                callBack.onSuccess(result);
+            }
+        });
+    }
     private String getAppendUrl(String url, Map<String, Object> map) {
         if (map != null && !map.isEmpty()) {
             StringBuffer buffer = new StringBuffer();

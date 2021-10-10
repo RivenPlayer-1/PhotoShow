@@ -22,7 +22,6 @@ public class SaveUtils {
             if (drawable == null) {
                 return false;
             }
-
             ContentValues values = new ContentValues();
             values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
             Uri dataUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;

@@ -65,6 +65,9 @@ public class LoginActivity extends BaseActivity {
                 Log.e("onSuccess", res);
                 Gson gson = new Gson();
                 LoginResponse loginResponse = gson.fromJson(res, LoginResponse.class);
+                saveStringToSp("uid",loginResponse.getUserAccount());
+                getStringFromSp("uid");
+                System.out.println("+++++++++++++++++++++++++++++++:"+getStringFromSp("uid"));
                 System.out.println(loginResponse);
                 if (loginResponse.getFault().equals("true")) {
                     String token = loginResponse.getToken();

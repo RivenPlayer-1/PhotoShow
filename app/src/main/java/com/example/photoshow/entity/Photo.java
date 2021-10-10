@@ -9,6 +9,33 @@ public class Photo {
     private Integer collcetCount;
     private String src;
     private String descrition;
+    private String flaglike;
+    private String flagcollect;
+
+    public boolean isFlaglike() {
+        if (flaglike.equals("false")){
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    public String getFlaglike() {
+        return flaglike;
+    }
+
+    public void setFlaglike(String flaglike) {
+        this.flaglike = flaglike;
+    }
+
+    public String getFlagcollect() {
+        return flagcollect;
+    }
+
+    public void setFlagcollect(String flagcollect) {
+        this.flagcollect = flagcollect;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -56,6 +83,8 @@ public class Photo {
     public void setDescrition(String descrition) {
         this.descrition = descrition;
     }
+
+
 
     @Override
     public String toString() {

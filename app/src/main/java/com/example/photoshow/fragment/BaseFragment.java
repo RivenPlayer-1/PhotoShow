@@ -39,6 +39,17 @@ public class BaseFragment extends Fragment implements PhotoCallBack {
         return sp.getString(key,"");
     }
 
+    public void navigateToWithFlag(Class cls, int flags) {
+        Intent in = new Intent(getActivity(), cls);
+        in.setFlags(flags);
+        startActivity(in);
+    }
+    protected void removeByKey(String key) {
+        SharedPreferences sp = getActivity().getSharedPreferences("sp_ttit", MODE_PRIVATE);
+        SharedPreferences.Editor edit = sp.edit();
+        edit.remove(key);
+        edit.commit();
+    }
     @Override
     public void onSuccess(String res) {
 

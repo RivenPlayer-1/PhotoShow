@@ -63,6 +63,17 @@ public abstract class BaseActivity extends AppCompatActivity {
         return sp.getString(key, "");
     }
 
+    public void saveStringToSp(String key,String val){
+        SharedPreferences sp = getSharedPreferences("sp_ttit",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString(key, val);
+        editor.commit();
+    }
+
+    public String getStringFromSp(String key){
+        SharedPreferences sp = getSharedPreferences("sp_ttit",MODE_PRIVATE);
+        return sp.getString(key,"");
+    }
 //    protected VideoViewManager getVideoViewManager() {
 //        return VideoViewManager.instance();
 //    }
