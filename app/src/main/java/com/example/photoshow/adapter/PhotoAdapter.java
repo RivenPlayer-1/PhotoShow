@@ -166,7 +166,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         }
     }
 
-    private static void updateCount(int uid,int vid,int type,boolean flag){
+    public static void updateCount(int uid,int vid,int type,boolean flag){
         HashMap<String, Object> params = new HashMap<String, Object>();
         Api.config(ApiConfig.CHANGEDATA, params).myCollRequest2(mContext,uid,vid,flag,type,new PhotoCallBack() {
             @Override

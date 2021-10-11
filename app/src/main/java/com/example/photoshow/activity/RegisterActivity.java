@@ -62,7 +62,7 @@ public class RegisterActivity extends BaseActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        showToast(res);
+                        showToast("注册成功");
                     }
                 });
             }

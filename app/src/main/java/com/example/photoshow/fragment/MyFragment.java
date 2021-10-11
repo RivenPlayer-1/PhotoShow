@@ -4,14 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.photoshow.R;
 import com.example.photoshow.activity.LoginActivity;
@@ -83,7 +82,7 @@ public class MyFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 showToast("修改用户名");
-            }
+                    }
         });
 
         send2.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +101,5 @@ public class MyFragment extends BaseFragment {
                 showToast("注销成功");
             }
         });
-
-
     }
 }
