@@ -24,6 +24,12 @@ import com.example.photoshow.entity.Photo;
 import com.example.photoshow.entity.PhotoRespnse;
 import com.example.photoshow.utils.StringUtils;
 import com.google.gson.Gson;
+import com.scwang.smart.refresh.footer.BallPulseFooter;
+import com.scwang.smart.refresh.header.BezierRadarHeader;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
+import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,8 +52,8 @@ public class HomeFragment extends BaseFragment {
     private String mParam2;
 
     private RecyclerView recyclerView;
+    private RefreshLayout refreshLayout;
     private List<Photo> photoList = new ArrayList<>();
-
     private PhotoAdapter photoAdapter;
     List<Photo> datas;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -92,6 +98,9 @@ public class HomeFragment extends BaseFragment {
                              Bundle savedInstanceState) {
             View v = inflater.inflate(R.layout.fragment_home,container,false);
             recyclerView = v.findViewById(R.id.recycle_view);
+            refreshLayout=v.findViewById(R.id.refreshLayout);
+            refreshLayout.setRefreshHeader(new BezierRadarHeader(getActivity()).setEnableHorizontalDrag(true));
+            refreshLayout.setRefreshFooter(new BallPulseFooter(getActivity()).setSpinnerStyle(SpinnerStyle.Scale));
             return v;
 //        }
     }
@@ -99,6 +108,26 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                getPhotoList(true);
+                //传入false表示刷新失败
+            }
+        });
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshlayout) {
+                getPhotoList(false);
+                //传入false表示加载失败
+            }
+        });
+        getPhotoList(true);
+    }
+
+
+    private void getPhotoList(Boolean getfinish){
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         photoAdapter = new PhotoAdapter(getActivity());
@@ -111,6 +140,11 @@ public class HomeFragment extends BaseFragment {
             Api.config(ApiConfig.PHOTO_LIST,params).getRequest(getActivity(),Integer.valueOf(getStringFromSp("uid")),new PhotoCallBack() {
                 @Override
                 public void onSuccess(String res) {
+                    if(getfinish){
+                        refreshLayout.finishRefresh(true);
+                    }else {
+                        refreshLayout.finishLoadMore(true);
+                    }
                     PhotoRespnse respnse = new Gson().fromJson(res,PhotoRespnse.class);
                     datas = respnse.getPhotos();
 
@@ -127,13 +161,8 @@ public class HomeFragment extends BaseFragment {
         }else {
             navigeteTo(LoginActivity.class);
         }
-        getPhotoList();
     }
 
-
-    private void getPhotoList(){
-
-    }
 
     Handler handler = new Handler(){
         @Override
@@ -142,6 +171,7 @@ public class HomeFragment extends BaseFragment {
             switch (msg.what){
                 case 0:
                     photoAdapter.setDatas(datas);
+                    photoAdapter.setUid(Integer.valueOf(getStringFromSp("userAccount")));
                     photoAdapter.notifyDataSetChanged();
                     recyclerView.setAdapter(photoAdapter);
                     break;

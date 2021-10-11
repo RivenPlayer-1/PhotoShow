@@ -45,12 +45,16 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private static Context mContext;
     public List<Photo> datas;
+    public Integer uid;
 
     public PhotoAdapter(Context context, List<Photo> datas){
         this.mContext = context;
         this.datas = datas;
     }
 
+    public void setUid(Integer uid){
+        this.uid = uid;
+    }
     public PhotoAdapter(Context mContext) {
         this.mContext = mContext;
     }
@@ -100,7 +104,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         return datas.size();
     }
 
-    private static class ViewHolder extends RecyclerView.ViewHolder{
+    private  class ViewHolder extends RecyclerView.ViewHolder{
         CardView cardView;
         private TextView tvAuthor;
         private TextView tvDesc;
@@ -132,11 +136,11 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     if(flagcollect){
                         tvCollect.setText(String.valueOf(--collectNum));
                         imgCollect.setImageResource(R.mipmap.shoucang2);
-                        updateCount(1,id,1,flagcollect);
+                        updateCount(uid,id,1,flagcollect);
                     }else{
                         tvCollect.setText(String.valueOf(++collectNum));
                         imgCollect.setImageResource(R.mipmap.shoucang);
-                        updateCount(1,id,1,flagcollect);
+                        updateCount(uid,id,1,flagcollect);
                     }
                     flagcollect=!flagcollect;
                 }
@@ -149,11 +153,11 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     if(flaglike){
                         tvDz.setText(String.valueOf(--likeNum));
                         imgDianzan.setImageResource(R.mipmap.dianzan);
-                        updateCount(1,id,2,flaglike);
+                        updateCount(uid,id,2,flaglike);
                     }else{
                         tvDz.setText(String.valueOf(++likeNum));
                         imgDianzan.setImageResource(R.mipmap.dianzan_kuai);
-                        updateCount(1,id,2,flaglike);
+                        updateCount(uid,id,2,flaglike);
                     }
                     flaglike=!flaglike;
                 }
@@ -168,9 +172,9 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             @Override
             public void onSuccess(final String res) {
                 Log.e("onSuccess", res);
-                Gson gson = new Gson();
-                PhotoRespnse photoRespnse = gson.fromJson(res, PhotoRespnse.class);
-                System.out.println("000000000000000000000000000"+photoRespnse);
+//                Gson gson = new Gson();
+//                PhotoRespnse photoRespnse = gson.fromJson(res, PhotoRespnse.class);
+//                System.out.println("000000000000000000000000000"+photoRespnse);
                 /*if (photoRespnse.getCode().equals("0")) {
 
                 }*/
