@@ -26,6 +26,12 @@ import com.example.photoshow.entity.CollectionResponse;
 import com.example.photoshow.entity.PhotoRespnse;
 import com.example.photoshow.utils.StringUtils;
 import com.google.gson.Gson;
+import com.scwang.smart.refresh.footer.BallPulseFooter;
+import com.scwang.smart.refresh.header.BezierRadarHeader;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
+import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 
 import java.util.HashMap;
 import java.util.List;
@@ -47,9 +53,9 @@ public class CollectionFragment extends BaseFragment {
     private String mParam2;
 
     private RecyclerView recyclerView;
+    private RefreshLayout refreshLayout;
     private CollAdapter collAdapter;
     private List<Coll> datas;
-
     public CollectionFragment() {
         // Required empty public constructor
     }
@@ -82,12 +88,32 @@ public class CollectionFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_collection,container,false);
         recyclerView = v.findViewById(R.id.recycle_view2);
+        refreshLayout=v.findViewById(R.id.refreshLayout2);
+        refreshLayout.setRefreshHeader(new BezierRadarHeader(getActivity()).setEnableHorizontalDrag(true));
+        refreshLayout.setRefreshFooter(new BallPulseFooter(getActivity()).setSpinnerStyle(SpinnerStyle.Scale));
         return v;
     }
 
     @Override
     public void onViewCreated(@NonNull  View view, @Nullable  Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                getPhotoList(true);
+                //传入false表示刷新失败
+            }
+        });
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshlayout) {
+                getPhotoList(false);
+                //传入false表示加载失败
+            }
+        });
+        getPhotoList(true);
+    }
+    private void getPhotoList(Boolean getfinish){
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         collAdapter = new CollAdapter(getActivity());
@@ -100,6 +126,11 @@ public class CollectionFragment extends BaseFragment {
             Api.config(ApiConfig.COLLECT,params).myCollRequest(getActivity(),new PhotoCallBack() {
                 @Override
                 public void onSuccess(String res) {
+                    if(getfinish){
+                        refreshLayout.finishRefresh(true);
+                    }else {
+                        refreshLayout.finishLoadMore(true);
+                    }
 //                    System.out.println("CCCCCCCCCCCC+++++++++______"+res);
                     CollectionResponse respnse = new Gson().fromJson(res, CollectionResponse.class);
                     datas = respnse.getCollection();
@@ -118,6 +149,9 @@ public class CollectionFragment extends BaseFragment {
         }else {
             navigeteTo(LoginActivity.class);
         }
+
+
+
     }
 
     Handler handler = new Handler(){
