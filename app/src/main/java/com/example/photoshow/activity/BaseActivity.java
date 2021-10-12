@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+
 public abstract class BaseActivity extends AppCompatActivity {
     public Context mContext;
 
@@ -74,9 +75,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         SharedPreferences sp = getSharedPreferences("sp_ttit",MODE_PRIVATE);
         return sp.getString(key,"");
     }
-//    protected VideoViewManager getVideoViewManager() {
-//        return VideoViewManager.instance();
-//    }
 
 //    @NonNull
 //    @Override

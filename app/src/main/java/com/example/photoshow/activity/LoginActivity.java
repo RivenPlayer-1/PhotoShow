@@ -21,7 +21,7 @@ public class LoginActivity extends BaseActivity {
     private EditText etUsername;
     private EditText etPassword;
     private Button btnLogin;
-
+    public static String uid;
     private boolean password_currect = false;
     @Override
     protected int initLayout() {
@@ -66,7 +66,7 @@ public class LoginActivity extends BaseActivity {
                 Gson gson = new Gson();
                 LoginResponse loginResponse = gson.fromJson(res, LoginResponse.class);
                 saveStringToSp("uid",loginResponse.getUserAccount());
-                getStringFromSp("uid");
+                uid=getStringFromSp("uid");
                 System.out.println("+++++++++++++++++++++++++++++++:"+getStringFromSp("uid"));
                 System.out.println(loginResponse);
                 if (loginResponse.getFault().equals("true")) {
