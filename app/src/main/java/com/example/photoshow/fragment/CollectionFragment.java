@@ -153,6 +153,7 @@ public class CollectionFragment extends BaseFragment {
                 case 0:
                     collAdapter.setDatas(datas);
                     collAdapter.notifyDataSetChanged();
+                    collAdapter.setUid(Integer.valueOf(getStringFromSp("userAccount")));
                     recyclerView.setAdapter(collAdapter);
                     break;
             }

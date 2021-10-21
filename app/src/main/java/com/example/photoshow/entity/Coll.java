@@ -3,12 +3,19 @@ package com.example.photoshow.entity;
 import java.io.Serializable;
 
 public class Coll implements Serializable {
+    private Integer id;
     private String src;
     private String author;
     private Integer collcetCount;
     private String descrition;
 
+    public Integer getId() {
+        return id;
+    }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getSrc() {
         return src;
@@ -54,8 +61,9 @@ public class Coll implements Serializable {
 
     @Override
     public String toString() {
-        return "Collection{" +
-                "src='" + src + '\'' +
+        return "Coll{" +
+                "id=" + id +
+                ", src='" + src + '\'' +
                 ", author='" + author + '\'' +
                 ", collcetCount=" + collcetCount +
                 ", descrition='" + descrition + '\'' +
