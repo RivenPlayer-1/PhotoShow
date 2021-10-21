@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -222,7 +223,8 @@ public class AddFragment extends Fragment implements PickerConfig.OnImagesSelect
         for (String path:paths){
             fileList.add(new File(path));
         }
-//        int i=0;
+        System.out.println(fileList);
+
 //        for(File file:fileList){
 //            if(file.exists()){
 //                Log.i("imageName:",file.getName());//经过测试，此处的名称不能相同，如果相同，只能保存最后一个图片，不知道那些同名的大神是怎么成功保存图片的。
@@ -260,11 +262,19 @@ public class AddFragment extends Fragment implements PickerConfig.OnImagesSelect
 //            }catch (IOException e){}
         OkHttpClient client = new OkHttpClient();
 //        String imgPath = getExternalCacheDir().getPath() + "/output_image.jpg";
+        MediaType PNG=MediaType.parse("image/*");
         MultipartBody.Builder builder = new MultipartBody.Builder();
-        builder.addFormDataPart("files", String.valueOf(new File(paths[0])));
+        for (File file:fileList){
+            if(file.exists()){
+                builder.setType(MultipartBody.FORM).addFormDataPart("files", file.getName(),RequestBody.create(PNG,file));
+                System.out.println(file.getName());
+            }
+        }
         RequestBody requestBody = builder.build();
-        Request.Builder reqBuilder = new Request.Builder();
-        Request request = reqBuilder
+//        int i=0;
+
+        //Request.Builder reqBuilder = new Request.Builder();
+        Request request = new Request.Builder()
                 .url("http://412691ul59.qicp.vip/user/fileUpload?userAccount=1&desc=1")
                 .post(requestBody)
                 .build();
