@@ -11,14 +11,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.photoshow.R;
 import com.example.photoshow.activity.ImagePickerActivity;
@@ -32,7 +30,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -42,14 +39,13 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the  factory method to
  * create an instance of this fragment.
  */
-public class AddFragment extends Fragment implements PickerConfig.OnImagesSelectFinishedListener{
+public class AddFragment extends BaseFragment implements PickerConfig.OnImagesSelectFinishedListener{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -263,19 +259,21 @@ public class AddFragment extends Fragment implements PickerConfig.OnImagesSelect
         OkHttpClient client = new OkHttpClient();
 //        String imgPath = getExternalCacheDir().getPath() + "/output_image.jpg";
         MediaType PNG=MediaType.parse("image/*");
+        MediaType MES=MediaType.parse("multipart/form-data");
         MultipartBody.Builder builder = new MultipartBody.Builder();
         for (File file:fileList){
             if(file.exists()){
-                builder.setType(MultipartBody.FORM).addFormDataPart("files", file.getName(),RequestBody.create(PNG,file));
-                System.out.println(file.getName());
+                builder.setType(MultipartBody.FORM)
+                        .addFormDataPart("files", file.getName(),RequestBody.create(PNG,file));
+
             }
         }
+        System.out.println(tidt_essay.getEditableText().toString());
         RequestBody requestBody = builder.build();
 //        int i=0;
-
         //Request.Builder reqBuilder = new Request.Builder();
         Request request = new Request.Builder()
-                .url("http://412691ul59.qicp.vip/user/fileUpload?userAccount=1&desc=1")
+                .url("http://412691ul59.qicp.vip/user/fileUpload"+"?userAccount="+Integer.valueOf(getStringFromSp("uid"))+"&desc="+tidt_essay.getEditableText().toString())
                 .post(requestBody)
                 .build();
         client.newCall(request).enqueue(new Callback() {

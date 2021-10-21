@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.photoshow.R;
 import com.example.photoshow.activity.LoginActivity;
@@ -29,6 +30,7 @@ public class MyFragment extends BaseFragment {
     private String mParam1;
     private String mParam2;
     private Button send2,send3;
+    private TextView usename;
     public MyFragment() {
         // Required empty public constructor
     }
@@ -76,7 +78,8 @@ public class MyFragment extends BaseFragment {
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        usename=getActivity().findViewById(R.id.username);
+        usename.setText(getStringFromSp("uid"));
         send2 = getActivity().findViewById(R.id.bt_mima);
         send3 = getActivity().findViewById(R.id.bt_logout);
         send2.setOnClickListener(new View.OnClickListener() {
