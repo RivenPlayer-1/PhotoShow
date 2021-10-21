@@ -287,6 +287,6 @@ public class AddFragment extends BaseFragment implements PickerConfig.OnImagesSe
                 Log.i("InfoMSG", response.body().string());
             }
         });
-
+        showToast("上传成功！");
     }
 }
