@@ -1,22 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragment.AddFragment">
+    android:paddingTop="56dp">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+    <!--    <androidx.appcompat.widget.Toolbar-->
+    <!--        android:id="@+id/toolbar"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="17dp"-->
+    <!--        android:background="?attr/colorPrimary"-->
+    <!--        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
+    <!--        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />-->
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="添加页面" />
 
-</FrameLayout>
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/et_essay"
+        android:layout_width="match_parent"
+        android:layout_height="154dp"
+        android:hint="记录美好生活！"
+        android:inputType="text" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_upload"
+        android:layout_width="match_parent"
+        android:layout_height="340dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="85dp">
+
+        <Button
+            android:id="@+id/btn_upload"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="10dp"
+            android:background="@color/gray"
+            android:text="选择图片"
+            android:textFontWeight="3"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_upload_confirm"
+            android:layout_width="150dp"
+            android:layout_height="69dp"
+            android:layout_marginLeft="70dp"
+            android:background="@color/gray"
+            android:text="发布"
+            android:textFontWeight="3"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</LinearLayout>

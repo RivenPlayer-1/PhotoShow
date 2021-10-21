@@ -10,4 +10,10 @@
     <color name="gray">#bcbcbc</color>
     <color name="green">#54ED6D</color>
     <color name="red">#f7797d</color>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="lv_backround">#BBF1FF</color>
+    <!--  过渡色  -->
+    <color name="transparent_background">#50000000</color>
 </resources>

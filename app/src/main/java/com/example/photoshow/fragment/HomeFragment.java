@@ -26,6 +26,8 @@ import com.example.photoshow.utils.StringUtils;
 import com.google.gson.Gson;
 import com.scwang.smart.refresh.footer.BallPulseFooter;
 import com.scwang.smart.refresh.header.BezierRadarHeader;
+import com.scwang.smart.refresh.header.ClassicsHeader;
+import com.scwang.smart.refresh.header.FalsifyHeader;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.constant.SpinnerStyle;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
@@ -57,6 +59,7 @@ public class HomeFragment extends BaseFragment {
     private PhotoAdapter photoAdapter;
     List<Photo> datas;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private int num = 1;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -99,8 +102,7 @@ public class HomeFragment extends BaseFragment {
             View v = inflater.inflate(R.layout.fragment_home,container,false);
             recyclerView = v.findViewById(R.id.recycle_view);
             refreshLayout=v.findViewById(R.id.refreshLayout);
-            refreshLayout.setRefreshHeader(new BezierRadarHeader(getActivity()).setEnableHorizontalDrag(true));
-            refreshLayout.setRefreshFooter(new BallPulseFooter(getActivity()).setSpinnerStyle(SpinnerStyle.Scale));
+            refreshLayout.setRefreshHeader(new ClassicsHeader(getActivity()));//下拉风格
             return v;
 //        }
     }
@@ -112,17 +114,9 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 getPhotoList(true);
-                //传入false表示刷新失败
             }
         });
-        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(RefreshLayout refreshlayout) {
-                getPhotoList(false);
-                //传入false表示加载失败
-            }
-        });
-        getPhotoList(true);
+        getPhotoList(false);
     }
 
 
@@ -141,8 +135,6 @@ public class HomeFragment extends BaseFragment {
                 public void onSuccess(String res) {
                     if(getfinish){
                         refreshLayout.finishRefresh(true);
-                    }else {
-                        refreshLayout.finishLoadMore(true);
                     }
                     PhotoRespnse respnse = new Gson().fromJson(res,PhotoRespnse.class);
                     datas = respnse.getPhotos();

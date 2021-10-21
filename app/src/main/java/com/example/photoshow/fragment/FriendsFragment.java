@@ -73,8 +73,8 @@ public class FriendsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_friends, container, false);
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+//        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+//        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         return view;
     }
 
@@ -82,6 +82,5 @@ public class FriendsFragment extends Fragment {
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull  MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.addfriends,menu);
-
     }
 }

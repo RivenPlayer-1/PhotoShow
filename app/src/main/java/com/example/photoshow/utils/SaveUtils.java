@@ -16,7 +16,6 @@ import java.io.OutputStream;
 
 public class SaveUtils {
     public static boolean SaveJpg(ImageView view) {
-
         try{
             Drawable drawable = view.getDrawable();
             if (drawable == null) {

@@ -172,12 +172,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             @Override
             public void onSuccess(final String res) {
                 Log.e("onSuccess", res);
-//                Gson gson = new Gson();
-//                PhotoRespnse photoRespnse = gson.fromJson(res, PhotoRespnse.class);
-//                System.out.println("000000000000000000000000000"+photoRespnse);
-                /*if (photoRespnse.getCode().equals("0")) {
-
-                }*/
+//
             }
 
             @Override
