@@ -1,9 +1,6 @@
 package com.example.photoshow.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,30 +13,15 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.photoshow.Helper.LongClickHandler;
+import com.example.photoshow.LongClick.LongClickHandler;
 import com.example.photoshow.R;
-import com.example.photoshow.activity.HomeActivity;
 import com.example.photoshow.api.Api;
 import com.example.photoshow.api.ApiConfig;
 import com.example.photoshow.api.PhotoCallBack;
-import com.example.photoshow.api.TtitCallback;
-import com.example.photoshow.entity.BaseResponse;
-import com.example.photoshow.entity.LoginResponse;
 import com.example.photoshow.entity.Photo;
-import com.example.photoshow.entity.PhotoRespnse;
-import com.example.photoshow.fragment.BaseFragment;
-import com.google.gson.Gson;
-import com.example.photoshow.activity.BaseActivity;
-import java.io.IOException;
+
 import java.util.HashMap;
 import java.util.List;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Request;
-import okhttp3.Response;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 

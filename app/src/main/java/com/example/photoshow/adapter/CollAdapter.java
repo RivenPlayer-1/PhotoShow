@@ -12,7 +12,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.photoshow.Helper.LongClickHandler;
+import com.example.photoshow.LongClick.LongClickHandler;
 import com.example.photoshow.R;
 import com.example.photoshow.entity.Coll;
 

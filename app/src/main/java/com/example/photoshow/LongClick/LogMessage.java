@@ -1,4 +1,4 @@
-package com.example.photoshow.Helper;
+package com.example.photoshow.LongClick;
 
 import android.util.Log;
 
@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import static androidx.constraintlayout.motion.utils.Oscillator.TAG;
 
-public class LogHelper {
+public class LogMessage {
     public static void ShowLog(String string){
         Log.v(TAG,string);
     }

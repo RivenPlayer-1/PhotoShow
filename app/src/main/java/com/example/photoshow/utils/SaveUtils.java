@@ -9,7 +9,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.widget.ImageView;
 
-import com.example.photoshow.Helper.LogHelper;
+import com.example.photoshow.LongClick.LogMessage;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -26,7 +26,7 @@ public class SaveUtils {
             Uri dataUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
             Uri fileUri = view.getContext().getContentResolver().insert(dataUri, values);
             if(fileUri == null){
-                LogHelper.ShowLog("fileUri == null");
+                LogMessage.ShowLog("fileUri == null");
                 return false;
             }
             OutputStream outStream = view.getContext().getContentResolver().openOutputStream(fileUri);
@@ -35,12 +35,12 @@ public class SaveUtils {
             outStream.flush();
             outStream.close();
             view.getContext().sendBroadcast(new Intent("com.android.camera.NEW_PICTURE", fileUri));
-            LogHelper.ShowLog("保存图片到相册完毕...");
+            LogMessage.ShowLog("保存图片到相册完毕...");
             return true;
 
         }
         catch (IOException ex) {
-            LogHelper.ShowException(ex);
+            LogMessage.ShowException(ex);
         }
         return false;
     }

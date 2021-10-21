@@ -1,4 +1,4 @@
-package com.example.photoshow.Helper;
+package com.example.photoshow.LongClick;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -16,7 +16,7 @@ public class LongClickHandler implements View.OnLongClickListener{
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                LogHelper.ShowLog("LongClickHandler");
+                LogMessage.ShowLog("LongClickHandler");
                 boolean bRet = SaveUtils.SaveJpg((ImageView) view);
                 if (bRet) {
                     Toast.makeText(view.getContext(), "图片保存成功", Toast.LENGTH_SHORT).show();
